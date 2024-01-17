@@ -130,10 +130,9 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
 		int livingNeighbors= 0;
-		boolean cell = (x == 0 && y == 0);
-
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
+				boolean cell = (x == 0 && y == 0);
 				if (!cell && (i+x>=0) && (i+x<board.length) && (j+y>=0) && (j+y<board[0].length) ) {
 					if (board[i + x][j + y] == 1) {
 						livingNeighbors++;
