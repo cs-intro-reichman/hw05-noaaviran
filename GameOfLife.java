@@ -106,7 +106,7 @@ public class GameOfLife {
 		int livingNeighbors  = count(board, i, j);
 
 		if (board[i][j]==1){
-			if (livingNeighbors < 2 || livingNeighbors >3){
+			if (livingNeighbors < 2 || livingNeighbors > 3){
 				return 0 ; 
 			}
 			else {
@@ -114,13 +114,14 @@ public class GameOfLife {
 			}
 		}
 
-		else if (livingNeighbors == 3)  {
+		else{
+			if (livingNeighbors == 3){
 			return 1 ; 
-		}
-
-		else {
+			}
+			else {
 			return 0 ;
-		} 
+		}
+		}
 	}
 	
 	// Counts and returns the number of living neighbors of the given cell
