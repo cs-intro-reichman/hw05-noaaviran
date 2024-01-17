@@ -8,32 +8,33 @@
 public class GameOfLife {
 
 	public static void main(String[] args) {
-		String fileName = args[0];
+		String fileName = args [0];
 		//// Uncomment the test that you want to execute, and re-compile.
 		//// (Run one test at a time).
-		//// test1(fileName);
-		//// test2(fileName);
-		//// test3(fileName, 3);
-		//// play(fileName);
+		 test1(fileName);
+		 test2(fileName);
+		 test3(fileName, 3);
+		 play(fileName);
+
 	}
 	
 	// Reads the data file and prints the initial board.
-	private static void test1(String fileName) {
+	public static void test1(String fileName) {
 		int[][] board = read(fileName);
-		print(board);
+		//print(board);
 	}
 		
 	// Reads the data file, and runs a test that checks 
 	// the count and cellValue functions.
-	private static void test2(String fileName) {
+	public static void test2(String fileName) {
 		int[][] board = read(fileName);
-		//// Write here code that tests that the count and cellValue functions
-		//// are working properly, and returning the correct values.
+		System.out.print(cellValue(board, 2, 3));
+
 	}
 		
 	// Reads the data file, plays the game for Ngen generations, 
 	// and prints the board at the beginning of each generation.
-	private static void test3(String fileName, int Ngen) {
+	public static void test3(String fileName, int Ngen) {
 		int[][] board = read(fileName);
 		for (int gen = 0; gen < Ngen; gen++) {
 			System.out.println("Generation " + gen + ":");
@@ -63,16 +64,33 @@ public class GameOfLife {
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
-		//// Replace the following statement with your code.
-		return null;
+		int counter = 0;
+		while (in.hasNextLine()) {
+		String x = in.readLine(); 
+		for(int i=0; i< x.length() ; i++){
+				if(x.charAt(i) == 'x'){
+				board[counter][i]=1;
+				}
+			  }
+			  counter++;
+		}
+		return board;
 	}
 	
 	// Creates a new board from the given board, using the rules of the game.
 	// Uses the cellValue(board,i,j) function to compute the value of each 
 	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
-		//// Replace the following statement with your code.
-		return null;
+		int n= board.length;
+		int m= board[0].length;
+		int[][] newboard= new int[n][m];
+		for(int i=1 ; i<n-1; i++){
+			for(int j=1 ; j<m-1; j++){
+				newboard[i][j] = cellValue(board, i, j);
+			}
+		}
+		
+		return newboard;
 	}
 
 	// Returns the value that cell (i,j) should have in the next generation.
@@ -85,8 +103,28 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
-		//// Replace the following statement with your code.
-		return 0;
+		boolean alive = false ;
+		if (board[i][j] == 1){
+			alive = true ; 
+		}
+		int livingNeighbors  = count(board, i, j);
+		
+		if (alive){
+			if (livingNeighbors < 2 || livingNeighbors >3){
+				return 0 ; 
+			}
+			else {
+				return 1 ;
+			}
+		}
+
+		else if (livingNeighbors == 3)  {
+			return 1 ; 
+		}
+
+		else {
+			return 0 ;
+		} 
 	}
 	
 	// Counts and returns the number of living neighbors of the given cell
@@ -94,13 +132,44 @@ public class GameOfLife {
 	// Assumes that i is at least 1 and at most the number of rows in the board - 1. 
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
-		//// Replace the following statement with your code.
-		return 0;
+		int livingNeighbors= 0;
+		if(board[i-1][j-1]==1){
+			livingNeighbors++;
+		} 
+		if(board[i-1][j]==1){
+			livingNeighbors++;
+		} 
+		if(board[i-1][j+1]==1){
+			livingNeighbors++;
+		} 
+		if(board[i][j-1]==1){
+			livingNeighbors++;
+		} 
+ 
+		if(board[i][j+1]==1){
+			livingNeighbors++;
+		} 
+		if(board[i+1][j-1]==1){
+			livingNeighbors++;
+		} 
+		if(board[i+1][j]==1){
+			livingNeighbors++;
+		} 
+		if(board[i+1][j+1]==1){
+			livingNeighbors++;
+		} 
+		return livingNeighbors;
 	}
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-		//// Write your code here.
+		for(int i=0; i< arr.length -2 ; i++){
+			for(int j=0; j<arr[0].length -2 ; j++){
+				System.out.printf("  %d" , arr[i][j]);
+			
+			}
+			System.out.printf("%n");
+		}
 	}
 		
     // Displays the board. Living and dead cells are represented by black and white squares, respectively.
@@ -109,6 +178,34 @@ public class GameOfLife {
     // This results in the following visual effect: The smaller the board, the larger the squares
 	// representing cells.
 	public static void show(int[][] board) {
+		StdDraw.setCanvasSize(900, 900);
+		int rows = board.length;
+		int cols = board[0].length;
+		StdDraw.setXscale(0, cols);
+		StdDraw.setYscale(0, rows);
+
+		// Enables drawing graphics in memory and showing it on the screen only when
+		// the StdDraw.show function is called.
+		StdDraw.enableDoubleBuffering();
+		
+		// For each cell (i,j), draws a filled square of size 1 by 1 (remember that the canvas was 
+		// already scaled to the dimensions rows by cols, which were read from the data file). 
+		// Uses i and j to calculate the (x,y) location of the square's center, i.e. where it
+		// will be drawn in the overall canvas. If the cell contains 1, sets the square's color
+		// to black; otherwise, sets it to white. In the RGB (Red-Green-Blue) color scheme used by
+		// StdDraw, the RGB codes of black and white are, respetively, (0,0,0) and (255,255,255).
+		for (int i = 0; i < rows; i++) {
+			for (int j = 0; j < cols; j++) {
+				int color = 255 * (1 - board[i][j]);
+				StdDraw.setPenColor(color, color, color);
+				StdDraw.filledRectangle(j + 0.5, rows - i - 0.5, 0.5, 0.5);
+			}
+		}
+		StdDraw.show();
+		StdDraw.pause(100); 
+	}
+
+	public static void show1(int[][] board) {
 		StdDraw.setCanvasSize(900, 900);
 		int rows = board.length;
 		int cols = board[0].length;
