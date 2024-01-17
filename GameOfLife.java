@@ -89,7 +89,12 @@ public class GameOfLife {
 				newboard[i][j] = cellValue(board, i, j);
 			}
 		}
-		
+
+		for (int i = 1; i < n - 1; i++) {
+			for (int j = 1; j < m - 1; j++) {
+				board[i][j] = newboard[i][j];
+			}
+		}
 		return newboard;
 	}
 
