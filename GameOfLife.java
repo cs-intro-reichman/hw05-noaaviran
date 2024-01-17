@@ -103,12 +103,9 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	// Uses the count(board,i,j) function to count the number of alive neighbors.
 	public static int cellValue(int[][] board, int i, int j) {
-		boolean alive = false ;
-		if (board[i][j] == 1){
-			alive = true ; 
-		}
+		boolean alive = true ;
 		int livingNeighbors  = count(board, i, j);
-		
+
 		if (alive){
 			if (livingNeighbors < 2 || livingNeighbors >3){
 				return 0 ; 
@@ -133,31 +130,18 @@ public class GameOfLife {
 	// Assumes that j is at least 1 and at most the number of columns in the board - 1. 
 	public static int count(int[][] board, int i, int j) {
 		int livingNeighbors= 0;
-		if(board[i-1][j-1]==1){
-			livingNeighbors++;
-		} 
-		if(board[i-1][j]==1){
-			livingNeighbors++;
-		} 
-		if(board[i-1][j+1]==1){
-			livingNeighbors++;
-		} 
-		if(board[i][j-1]==1){
-			livingNeighbors++;
-		} 
- 
-		if(board[i][j+1]==1){
-			livingNeighbors++;
-		} 
-		if(board[i+1][j-1]==1){
-			livingNeighbors++;
-		} 
-		if(board[i+1][j]==1){
-			livingNeighbors++;
-		} 
-		if(board[i+1][j+1]==1){
-			livingNeighbors++;
-		} 
+		boolean cell = (x == 0 && y == 0);
+
+		for (int x = -1; x <= 1; x++) {
+			for (int y = -1; y <= 1; y++) {
+				if (!cell && (i+x>=0) && (i+x<board.length) && (j+y>=0) && (j+y<board[0].length) ) {
+					if (board[i + x][j + y] == 1) {
+						livingNeighbors++;
+					}
+				}
+			}
+		}
+		
 		return livingNeighbors;
 	}
 	
