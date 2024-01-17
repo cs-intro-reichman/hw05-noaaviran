@@ -64,12 +64,12 @@ public class GameOfLife {
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
-		int counter = 0;
+		int counter = 1;
 		while (in.hasNextLine()) {
 		String x = in.readLine(); 
 		for(int i=0; i< x.length() ; i++){
 				if(x.charAt(i) == 'x'){
-				board[counter][i]=1;
+				board[counter][i+1]=1;
 				}
 			  }
 			  counter++;
@@ -116,11 +116,11 @@ public class GameOfLife {
 
 		else{
 			if (livingNeighbors == 3){
-			return 1 ; 
+				return 1 ; 
 			}
 			else {
-			return 0 ;
-		}
+				return 0 ;
+			}
 		}
 	}
 	
@@ -133,7 +133,7 @@ public class GameOfLife {
 		for (int x = -1; x <= 1; x++) {
 			for (int y = -1; y <= 1; y++) {
 				boolean cell = (x == 0 && y == 0);
-				if (!cell && (i+x>=0) && (i+x<board.length) && (j+y>=0) && (j+y<board[0].length) ) {
+				if ((!cell) && (i+x>=0) && (i+x<board.length) && (j+y>=0) && (j+y<board[0].length) ) {
 					if (board[i + x][j + y] == 1) {
 						livingNeighbors++;
 					}
