@@ -119,7 +119,7 @@ public class GameOfLife {
 				return 1 ;
 			}
 		}
-		
+
 		else if (livingNeighbors == 3){
 				return 1 ; 
 			}
@@ -150,8 +150,8 @@ public class GameOfLife {
 	
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
     public static void print(int[][] arr) {
-		for(int i=0; i< arr.length -2 ; i++){
-			for(int j=0; j<arr[0].length -2 ; j++){
+		for(int i=1; i< arr.length -1 ; i++){
+			for(int j=1; j<arr[0].length -1 ; j++){
 				System.out.printf("  %d" , arr[i][j]);
 			
 			}
