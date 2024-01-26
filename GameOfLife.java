@@ -66,6 +66,7 @@ public class GameOfLife {
 		int[][] board = new int[rows + 2][cols + 2];
 		int counter = 1;
 		while (in.hasNextLine()) {
+		// Bad indentation 
 		String x = in.readLine(); 
 		for(int i=0; i< x.length() ; i++){
 				if(x.charAt(i) == 'x'){
